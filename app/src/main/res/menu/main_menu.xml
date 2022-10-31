@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/Login"
+        android:icon="@drawable/ic_flag"
+        android:orderInCategory="100"
+        android:actionLayout="@layout/activity_main"
+        android:title="@string/login"
+        android:onClick="startLogin"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/ConnectDisplay"
+        android:icon="@drawable/ic_flag"
+        android:orderInCategory="200"
+        android:onClick="launchDevices"
+        app:showAsAction="never"
+        android:actionLayout="@layout/activity_main"
+        android:title="@string/ConnectDevice" />
+    <item
+        android:id="@+id/Feedback"
+        android:icon="@drawable/ic_flag"
+        android:orderInCategory="300"
+        app:showAsAction="never"
+        android:actionLayout="@layout/activity_main"
+        android:title="@string/feedback" />
+    <item
+        android:id="@+id/Logout"
+        android:icon="@drawable/ic_flag"
+        android:orderInCategory="400"
+        app:showAsAction="never"
+        android:actionLayout="@layout/activity_main"
+        android:title="logout" />
+
+</menu>

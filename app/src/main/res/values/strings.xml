@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">SmartBus Alert</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC8-DKVdpybi4Gc8Jt8ler3pbagM5EEcGo</string>
+    <string name="default_info_title">Sydney</string>
+    <string name="default_info_snippet">Australia</string>
+    <string name="pick_place">Select Destination</string>
+    <string name="searchButton">Search</string>
+    <string name="Confirm_destination">Confirm</string>
+    <string name="Cancel_selection">Cancel</string>
+    <string name="connect">Connect</string>
+    <string name="BtToolbar">BtToolbar</string>
+    <string name="logout">logout</string>
+    <string name="feedback">Feedback</string>
+    <string name="setting">Setting</string>
+    <string name="ConnectDevice">ConnectDevice</string>
+    <string name="login">Login</string>
+    <string name="bluetooth_not_supported">bluetooth_not_supported</string>
+    <string name="register">REGISTER</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="enter_full_name">Enter full Name</string>
+    <string name="are_you_a_driver">Are you a driver?</string>
+    <string name="vehicle_registration">Vehicle registration</string>
+    <string name="submit">Submit</string>
+    <string name="passwdtxt">Confirm Password</string>
+    <string name="passwd">Password</string>
+    <string name="enter_phone">Enter phone number</string>
+    <string name="enter_email">Enter your email Address</string>
+    <string name="textview">WELCOME TO SmartBus</string>
+    <string name="vehicle_registrations">Vehicle Registration</string>
+    <string name="dialog_message">Confirm your destination</string>
+    <string name="dialog_title">Set your Destination</string>
+    <string name="ok">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="search_your_destination">search your destination</string>
+    <string name="select">Select</string>
+    <string name="vehicle_code">Vehicle code</string>
+    <string name="location_tag">Location Tag</string>
+    <string name="send_confirmation">Send confirmation</string>
+    <string name="send">Send</string>
+
+</resources>

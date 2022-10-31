@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "579329216079",
+    "project_id": "smart-bus-b5e26",
+    "storage_bucket": "smart-bus-b5e26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579329216079:android:d3264f2cb9913073d7243a",
+        "android_client_info": {
+          "package_name": "com.example.callback"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "579329216079-t7crtlaoa7jud38qmrmnci5qics18cub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDvPBSU6zyV1Nl9ye-RCM7vjL-jDVZJIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "579329216079-t7crtlaoa7jud38qmrmnci5qics18cub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
