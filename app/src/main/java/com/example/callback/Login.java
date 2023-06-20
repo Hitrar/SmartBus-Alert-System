@@ -1,7 +1,13 @@
 package com.example.callback;
 
 import static android.content.ContentValues.TAG;
+import static com.example.callback.MainActivity.firebaseAuth;
+import static com.example.callback.MainActivity.userDatabase;
+import static com.example.callback.MainActivity.vehicleDatabase;
 
+import static java.lang.String.*;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -16,8 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
@@ -27,7 +31,6 @@ public class Login extends AppCompatActivity {
     EditText nameEditText, emailEditText, phoneNumberEditText, passwordEditText, confirmPasswordEditText, busPlateNumberEditText;
     CheckBox driver;
     boolean isDriver;
-    DatabaseReference userDatabase, vehicleDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,6 @@ public class Login extends AppCompatActivity {
         findViewById(R.id.signUpButton).setOnClickListener(view -> startSignUp());
         emailEditText = findViewById(R.id.editTextEmailAddress);
         passwordEditText = findViewById(R.id.editTextPassword);
-        userDatabase = FirebaseDatabase.getInstance().getReference("Users");
-        vehicleDatabase = FirebaseDatabase.getInstance().getReference("Vehicles").child("vehicleDetails");
 
         findViewById(R.id.signInButton).setOnClickListener(view -> loginUser());
     }
@@ -50,18 +51,17 @@ public class Login extends AppCompatActivity {
         }
 
     void loginUserInFirebase(String emailLogin, String passwordLogin) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signInWithEmailAndPassword(emailLogin, passwordLogin).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
-                        if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()) {
                             Toast.makeText(Login.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                            finish();
+                            startActivity(new Intent(Login.this, MainActivity.class));
                         } else {
                             Toast.makeText(Login.this, "You need to verify your email", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(Login.this, task.getException().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -102,6 +102,8 @@ public class Login extends AppCompatActivity {
         if (!isValidated) {
             return;
         }
+        if (vehiclePlate==null)
+            isDriver = false;
         createAccountInFirebase(name, email, phone, password, vehiclePlate);
 
 
@@ -111,45 +113,63 @@ public class Login extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Login.this,
                 task -> {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful()) {
                         Toast.makeText(Login.this, "Account Created Successfully, verify your Email", Toast.LENGTH_SHORT).show();
                         Objects.requireNonNull(firebaseAuth.getCurrentUser()).sendEmailVerification();
-                        Users user = new Users(firebaseAuth.getCurrentUser().getUid(),name, email, phone, isDriver, vehiclePlate);
-                        userDatabase.child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
-                        if (isDriver){
-                            generateVehicleCode(vehiclePlate);
 
+                        String myVehicleCode = null;
+                        if (isDriver && !Objects.equals(vehiclePlate, "")) {
+                            myVehicleCode = generateVehicleCode(vehiclePlate, firebaseAuth.getCurrentUser().getUid());
                         }
+                        Users user = new Users(firebaseAuth.getCurrentUser().getUid(), name, email, phone, isDriver, vehiclePlate, myVehicleCode);
+
+                        userDatabase.child(firebaseAuth.getCurrentUser().getUid()).setValue(user);
+                        userDatabase.child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Users newUser = snapshot.getValue(Users.class);
+                                assert newUser != null;
+                                Log.i(TAG, "onDataChange: successful retrieval " + newUser.email);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                Log.i(TAG, "onCancelled: there is an error " + error.getMessage());
+                            }
+                        });
                         firebaseAuth.signOut();
-//                        finish();
+
                     }
                     else{
                         Toast.makeText(Login.this, Objects.requireNonNull(task.getException()).getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
         );
+        setContentView(R.layout.activity_login);
     }
 
-    private void generateVehicleCode(String vehiclePlate) {
+    private String generateVehicleCode(String vehiclePlate, String userId) {
         int len = 6;
-        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String chars = "123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++)
             sb.append(chars.charAt(rnd.nextInt(chars.length())));
-        vehicleDatabase.orderByChild("VehicleCode").equalTo(String.valueOf(sb)).addValueEventListener(new ValueEventListener(){
+        vehicleDatabase.orderByChild("VehicleCode").equalTo(valueOf(sb)).addValueEventListener(new ValueEventListener(){
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot){
                 if(dataSnapshot.exists()) {
-                    Log.i(TAG, "onDataChange: new vehicle code is  "+String.valueOf(sb));
-                    generateVehicleCode(vehiclePlate);
+                    Log.i(TAG, "onDataChange: new vehicle code is  "+ sb);
+                    generateVehicleCode(vehiclePlate, userId);
 
 
                 }
-                else{
-                    String vehicleId = vehicleDatabase.push().getKey();
-                    MyVehicle myVehicle = new MyVehicle(vehicleId, vehiclePlate, String.valueOf(sb));
-                    vehicleDatabase.child("vehicleDetails").setValue(myVehicle);
+                else{//String vehicleId =
+                    vehicleDatabase.push().getKey();
+                    MyVehicle myVehicle = new MyVehicle(userId, vehiclePlate, valueOf(sb));
+                    vehicleDatabase.child(valueOf(sb)).setValue(myVehicle);
+
 
 
                 }
@@ -159,7 +179,7 @@ public class Login extends AppCompatActivity {
                 Log.i(TAG, "onCancelled: There is an error");
             }  });
 
-
+        return valueOf(sb);
     }
 
     boolean validateData(String email,String phone,String password, String confirmPassword){

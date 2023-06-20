@@ -1,5 +1,7 @@
 package com.example.callback;
 
+import androidx.annotation.Nullable;
+
 public class Users {
     String UserId;
     String name;
@@ -7,18 +9,20 @@ public class Users {
     String phone;
     boolean vehicle;
     String vehicleRegistration;
+    String vehicleCode;
 
     public Users() {
 
     }
 
-    public Users(String UserId, String name, String email, String phone, boolean vehicle, String vehicleRegistration) {
+    public Users(String UserId, String name, String email, String phone, boolean vehicle, @Nullable String vehicleRegistration,@Nullable String vehicleCode) {
         this.UserId = UserId;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.vehicle = vehicle;
         this.vehicleRegistration = vehicleRegistration;
+        this.vehicleCode =vehicleCode;
     }
     public String getUserId() {return UserId;}
 
@@ -64,5 +68,13 @@ public class Users {
 
     public void setVehicleRegistration(String vehicleRegistration) {
         this.vehicleRegistration = vehicleRegistration;
+
+    }
+    public String getVehicleCode() {
+        return vehicleCode;
+    }
+
+    public void setVehicleCode(String vehicleCode) {
+        this.vehicleCode = vehicleCode;
     }
 }

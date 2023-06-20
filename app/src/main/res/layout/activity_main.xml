@@ -29,7 +29,7 @@
         android:layout_height="550sp"
         app:layout_constraintBottom_toTopOf="@id/searchText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:layout="@layout/dummy_mapviewfragment" />
@@ -71,6 +71,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button2"
         app:layout_constraintTop_toBottomOf="@id/map" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:clickable="false"
+        android:onClick="startJourneyTracking"
+        android:enabled="false"
+        android:src="@android:drawable/stat_notify_sync_noanim"
+        app:layout_constraintBottom_toBottomOf="@+id/map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusable="true"
+        android:contentDescription="@string/start" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

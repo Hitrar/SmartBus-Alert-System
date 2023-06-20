@@ -30,6 +30,7 @@
         android:icon="@drawable/ic_flag"
         android:orderInCategory="400"
         app:showAsAction="never"
+        android:onClick="signOut"
         android:actionLayout="@layout/activity_main"
         android:title="logout" />
 

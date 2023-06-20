@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
@@ -84,9 +84,9 @@
 
     <TextView
         android:id="@+id/Titlelogin"
-        android:layout_width="387dp"
-        android:layout_height="109dp"
-        android:text="Welcome, Kindly Sign in!"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Welcome Back!"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"

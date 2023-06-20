@@ -3,17 +3,19 @@ package com.example.callback;
 public class Destination {
     String id;
     String vehicleCode;
-    com.google.android.gms.maps.model.LatLng destinations;
-    String locationTag;
+    double latitude;
+    double longitude;
+    String tagLocation;
 
     public Destination() {
     }
 
-    public Destination(String id, String vehicleCode, com.google.android.gms.maps.model.LatLng destinations, String locationTag) {
+    public Destination(String id, double latitude, double longitude,  String tagLocation,String vehicleCode) {
         this.id = id;
         this.vehicleCode = vehicleCode;
-        this.destinations = destinations;
-        this.locationTag = locationTag;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.tagLocation = tagLocation;
     }
     public String getId() {
         return id;
@@ -31,20 +33,28 @@ public class Destination {
         this.vehicleCode = vehicleCode;
     }
 
-    public com.google.android.gms.maps.model.LatLng getDestinations() {
-        return destinations;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setDestinations(com.google.android.gms.maps.model.LatLng destinations) {
-        this.destinations = destinations;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public String getLocationTag() {
-        return locationTag;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLocationTag(String locationTag) {
-        this.locationTag = locationTag;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getTagLocation() {
+        return tagLocation;
+    }
+
+    public void setTagLocation(String tagLocation) {
+        this.tagLocation = tagLocation;
     }
 }
 
